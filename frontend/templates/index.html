@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% block title %}AI Interview Prep Suite - Home{% endblock %}
+
+{% block content %}
+<div class="container">
+    <!-- Hero Section -->
+    <div class="row align-items-center justify-content-center py-5 mb-5">
+        <div class="col-lg-8 text-center">
+            <h1 class="display-4 fw-bold text-gradient mb-4">
+                <i class="fas fa-brain"></i> AI Interview Prep Suite
+            </h1>
+            <p class="lead mb-4">
+                Your complete platform for interview preparation. From resume building to mock interviews, we've got you covered.
+            </p>
+            <div class="d-flex justify-content-center gap-3 flex-wrap">
+                <a href="/resume-builder" class="btn btn-primary btn-lg">
+                    <i class="fas fa-file-alt"></i> Build Resume
+                </a>
+                <a href="/mock-interview" class="btn btn-success btn-lg">
+                    <i class="fas fa-video"></i> Start Mock Interview
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Features Section -->
+    <div class="row mb-5">
+        <h2 class="text-center mb-4">Our Features</h2>
+        
+        <div class="col-md-6 col-lg-3 mb-4">
+            <div class="card h-100 feature-card shadow-sm">
+                <div class="card-body text-center">
+                    <i class="fas fa-file-alt fa-3x text-primary mb-3"></i>
+                    <h5 class="card-title">Resume Builder</h5>
+                    <p class="card-text">Generate ATS-friendly resumes tailored to your target role with AI-powered optimization suggestions.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-lg-3 mb-4">
+            <div class="card h-100 feature-card shadow-sm">
+                <div class="card-body text-center">
+                    <i class="fas fa-question-circle fa-3x text-success mb-3"></i>
+                    <h5 class="card-title">Interview Q&A</h5>
+                    <p class="card-text">Practice with AI-generated role-specific interview questions and get detailed feedback on your answers.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-lg-3 mb-4">
+            <div class="card h-100 feature-card shadow-sm">
+                <div class="card-body text-center">
+                    <i class="fas fa-book fa-3x text-warning mb-3"></i>
+                    <h5 class="card-title">Study Concepts</h5>
+                    <p class="card-text">Access organized learning paths with role-specific concepts and structured study materials.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-lg-3 mb-4">
+            <div class="card h-100 feature-card shadow-sm">
+                <div class="card-body text-center">
+                    <i class="fas fa-video fa-3x text-danger mb-3"></i>
+                    <h5 class="card-title">Mock Interview</h5>
+                    <p class="card-text">Simulate realistic interview scenarios with AI feedback and scoring to track your progress.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/home.js') }}"></script>
+{% endblock %}

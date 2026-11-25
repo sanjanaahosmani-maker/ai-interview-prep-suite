@@ -1,0 +1,128 @@
+{% extends "base.html" %}
+
+{% block title %}Resume Builder - AI Interview Prep Suite{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <!-- Input Form Column -->
+        <div class="col-lg-4 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0"><i class="fas fa-edit"></i> Your Profile</h5>
+                </div>
+                <div class="card-body">
+                    <form id="resumeForm">
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Full Name *</label>
+                            <input type="text" class="form-control" id="name" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email *</label>
+                            <input type="email" class="form-control" id="email" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="phone" class="form-label">Phone</label>
+                            <input type="tel" class="form-control" id="phone">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="targetRole" class="form-label">Target Role *</label>
+                            <select class="form-select" id="targetRole" required>
+                                <option value="">Select a role...</option>
+                                <option value="Frontend Developer">Frontend Developer</option>
+                                <option value="Backend Developer">Backend Developer</option>
+                                <option value="Full Stack Developer">Full Stack Developer</option>
+                                <option value="Data Scientist">Data Scientist</option>
+                                <option value="Data Analyst">Data Analyst</option>
+                                <option value="DevOps Engineer">DevOps Engineer</option>
+                                <option value="Cloud Architect">Cloud Architect</option>
+                                <option value="Machine Learning Engineer">Machine Learning Engineer</option>
+                                <option value="Product Manager">Product Manager</option>
+                                <option value="UI/UX Designer">UI/UX Designer</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="education" class="form-label">Education</label>
+                            <textarea class="form-control" id="education" rows="3" placeholder="e.g., B.Tech in Computer Science, XYZ University (2020)"></textarea>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="experience" class="form-label">Work Experience</label>
+                            <textarea class="form-control" id="experience" rows="3" placeholder="e.g., Senior Developer at ABC Corp (2020-2024)"></textarea>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="skills" class="form-label">Skills *</label>
+                            <textarea class="form-control" id="skills" rows="3" placeholder="e.g., Python, JavaScript, React, SQL" required></textarea>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="projects" class="form-label">Projects</label>
+                            <textarea class="form-control" id="projects" rows="3" placeholder="e.g., Built a real-time chat app using React and Node.js"></textarea>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="certifications" class="form-label">Certifications</label>
+                            <textarea class="form-control" id="certifications" rows="2" placeholder="e.g., AWS Certified Solutions Architect"></textarea>
+                        </div>
+
+                        <button type="button" class="btn btn-primary w-100" onclick="generateResume()">
+                            <i class="fas fa-magic"></i> Generate Resume
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Output Column -->
+        <div class="col-lg-8">
+            <!-- Resume Display -->
+            <div class="card shadow-sm mb-4" id="resumeCard" style="display: none;">
+                <div class="card-header bg-success text-white d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0"><i class="fas fa-file-alt"></i> Your Generated Resume</h5>
+                    <div>
+                        <button class="btn btn-sm btn-light" onclick="downloadResume()">
+                            <i class="fas fa-download"></i> Download
+                        </button>
+                        <button class="btn btn-sm btn-light" onclick="copyResume()">
+                            <i class="fas fa-copy"></i> Copy
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div id="resumeContent" class="resume-preview"></div>
+                </div>
+            </div>
+
+            <!-- Optimization Suggestions -->
+            <div class="card shadow-sm" id="suggestionsCard" style="display: none;">
+                <div class="card-header bg-warning text-dark">
+                    <h5 class="mb-0"><i class="fas fa-lightbulb"></i> Optimization Suggestions</h5>
+                </div>
+                <div class="card-body">
+                    <div id="suggestionsContent"></div>
+                </div>
+            </div>
+
+            <!-- Initial State -->
+            <div id="emptyState" class="text-center">
+                <div class="card shadow-sm border-0">
+                    <div class="card-body py-5">
+                        <i class="fas fa-file-alt fa-5x text-muted mb-3"></i>
+                        <h5>Generate Your Resume</h5>
+                        <p class="text-muted">Fill in your profile information and click "Generate Resume" to create an ATS-friendly resume tailored to your target role.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/resume_builder.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,165 @@
+{% extends "base.html" %}
+
+{% block title %}Mock Interview - AI Interview Prep Suite{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <!-- Setup Panel -->
+    <div id="setupPanel" class="row mb-4">
+        <div class="col-lg-6 mx-auto">
+            <div class="card shadow-sm">
+                <div class="card-header bg-danger text-white">
+                    <h5 class="mb-0"><i class="fas fa-video"></i> Start Mock Interview</h5>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label for="mockRole" class="form-label">Target Role *</label>
+                        <select class="form-select" id="mockRole">
+                            <option value="">Select a role...</option>
+                            <option value="Frontend Developer">Frontend Developer</option>
+                            <option value="Backend Developer">Backend Developer</option>
+                            <option value="Full Stack Developer">Full Stack Developer</option>
+                            <option value="Data Scientist">Data Scientist</option>
+                            <option value="Data Analyst">Data Analyst</option>
+                            <option value="DevOps Engineer">DevOps Engineer</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="mockExperience" class="form-label">Experience Level</label>
+                        <select class="form-select" id="mockExperience">
+                            <option value="junior">Junior</option>
+                            <option value="mid" selected>Mid-Level</option>
+                            <option value="senior">Senior</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="mockDomain" class="form-label">Domain/Industry</label>
+                        <input type="text" class="form-control" id="mockDomain" placeholder="e.g., Web Development">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="mockQuestionCount" class="form-label">Number of Questions</label>
+                        <input type="number" class="form-control" id="mockQuestionCount" value="5" min="1" max="15">
+                    </div>
+
+                    <button class="btn btn-danger w-100" onclick="startMockInterview()">
+                        <i class="fas fa-play"></i> Start Interview
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Interview Panel -->
+    <div id="interviewPanel" style="display: none;">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <!-- Progress Bar -->
+                <div class="card shadow-sm mb-4">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Question <span id="currentQuestionNum">1</span> of <span id="totalQuestionsNum">5</span></span>
+                            <span id="sessionStatus" class="badge bg-primary">In Progress</span>
+                        </div>
+                        <div class="progress">
+                            <div id="progressBar" class="progress-bar" role="progressbar" style="width: 20%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Question Display -->
+                <div class="card shadow-sm mb-4">
+                    <div class="card-header bg-info text-white">
+                        <h5 class="mb-0"><i class="fas fa-question-circle"></i> Interview Question</h5>
+                    </div>
+                    <div class="card-body">
+                        <p id="questionDisplay" class="fs-5 mb-0"></p>
+                    </div>
+                </div>
+
+                <!-- Answer Input -->
+                <div class="card shadow-sm mb-4">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0"><i class="fas fa-microphone"></i> Your Answer</h5>
+                    </div>
+                    <div class="card-body">
+                        <textarea id="answerInput" class="form-control" rows="5" placeholder="Type your answer here... (You have time to think about this carefully)"></textarea>
+                        <small class="text-muted d-block mt-2">Share a thoughtful and comprehensive answer.</small>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="card shadow-sm mb-4">
+                    <div class="card-body">
+                        <div class="btn-group w-100" role="group">
+                            <button type="button" id="showAnswerBtn" class="btn btn-outline-secondary" onclick="showIdealAnswerForMock()">
+                                <i class="fas fa-lightbulb"></i> Show Ideal Answer
+                            </button>
+                            <button type="button" id="submitAnswerBtn" class="btn btn-success" onclick="submitMockAnswer()">
+                                <i class="fas fa-check"></i> Submit & Next
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ideal Answer Section -->
+                <div id="idealAnswerSection" style="display: none;" class="mb-4">
+                    <div class="alert alert-info">
+                        <h6 class="mb-2"><i class="fas fa-star"></i> Ideal Answer</h6>
+                        <p id="idealAnswerDisplay" class="mb-0"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Results Panel -->
+    <div id="resultsPanel" style="display: none;">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <div class="card shadow-sm mb-4">
+                    <div class="card-header bg-success text-white">
+                        <h5 class="mb-0"><i class="fas fa-trophy"></i> Interview Complete!</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row text-center mb-4">
+                            <div class="col-md-4">
+                                <h6 class="text-muted">Total Questions</h6>
+                                <h3 id="resultTotal">5</h3>
+                            </div>
+                            <div class="col-md-4">
+                                <h6 class="text-muted">Average Score</h6>
+                                <h3 id="resultScore">75%</h3>
+                            </div>
+                            <div class="col-md-4">
+                                <h6 class="text-muted">Duration</h6>
+                                <h3 id="resultDuration">10 min</h3>
+                            </div>
+                        </div>
+
+                        <hr>
+
+                        <h6 class="mb-3">Feedback Summary</h6>
+                        <div id="feedbackSummary"></div>
+
+                        <div class="mt-4">
+                            <button class="btn btn-primary" onclick="downloadResults()">
+                                <i class="fas fa-download"></i> Download Report
+                            </button>
+                            <button class="btn btn-secondary" onclick="returnToSetup()">
+                                <i class="fas fa-redo"></i> Start New Interview
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/mock_interview.js') }}"></script>
+{% endblock %}

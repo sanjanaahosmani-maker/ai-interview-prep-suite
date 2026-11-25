@@ -1,0 +1,639 @@
+/* ===========================
+   Global Styles
+   =========================== */
+
+:root {
+    --primary-color: #667eea;
+    --secondary-color: #764ba2;
+    --success-color: #28a745;
+    --danger-color: #dc3545;
+    --warning-color: #ffc107;
+    --info-color: #17a2b8;
+    --light-color: #f8f9fa;
+    --dark-color: #343a40;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f5f7fa;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* ===========================
+   Navigation Styles
+   =========================== */
+
+.navbar {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%) !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-brand {
+    font-size: 1.5rem;
+    letter-spacing: 1px;
+}
+
+.navbar-brand i {
+    margin-right: 8px;
+}
+
+.nav-link {
+    transition: all 0.3s ease;
+    margin: 0 5px;
+    border-radius: 5px;
+}
+
+.nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+/* ===========================
+   Main Content Styles
+   =========================== */
+
+main {
+    background-color: #f5f7fa;
+    padding: 2rem 0;
+}
+
+.container-fluid {
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* ===========================
+   Card Styles
+   =========================== */
+
+.card {
+    border: none;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    background-color: white;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1) !important;
+}
+
+.card-header {
+    border-radius: 10px 10px 0 0 !important;
+    padding: 1.25rem;
+    font-weight: 600;
+    border: none !important;
+}
+
+.card-body {
+    padding: 1.5rem;
+}
+
+.feature-card {
+    border-radius: 10px;
+    transition: all 0.3s ease;
+}
+
+.feature-card:hover {
+    border-color: var(--primary-color) !important;
+    box-shadow: 0 8px 20px rgba(102, 126, 234, 0.15) !important;
+}
+
+/* ===========================
+   Text & Headings
+   =========================== */
+
+h1, h2, h3, h4, h5, h6 {
+    color: var(--dark-color);
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.text-gradient {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.lead {
+    color: #666;
+    font-size: 1.125rem;
+    font-weight: 500;
+}
+
+/* ===========================
+   Button Styles
+   =========================== */
+
+.btn {
+    border-radius: 8px;
+    font-weight: 600;
+    padding: 0.6rem 1.5rem;
+    transition: all 0.3s ease;
+    border: none;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    color: white;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+    color: white;
+}
+
+.btn-success {
+    background-color: var(--success-color);
+}
+
+.btn-success:hover {
+    background-color: #228237;
+    transform: translateY(-2px);
+}
+
+.btn-danger {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+}
+
+.btn-danger:hover {
+    transform: translateY(-2px);
+    color: white;
+}
+
+.btn-warning {
+    background-color: var(--warning-color);
+    color: black;
+}
+
+.btn-warning:hover {
+    background-color: #e0a800;
+    transform: translateY(-2px);
+    color: black;
+}
+
+.btn-outline-secondary {
+    color: #6c757d;
+    border-color: #6c757d;
+}
+
+.btn-outline-secondary:hover {
+    background-color: #6c757d;
+    border-color: #6c757d;
+    color: white;
+}
+
+/* ===========================
+   Form Styles
+   =========================== */
+
+.form-label {
+    font-weight: 600;
+    color: var(--dark-color);
+    margin-bottom: 0.5rem;
+}
+
+.form-control,
+.form-select {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 0.75rem;
+    transition: all 0.3s ease;
+    font-size: 0.95rem;
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+}
+
+.form-control::placeholder {
+    color: #999;
+}
+
+textarea.form-control {
+    resize: vertical;
+    min-height: 120px;
+}
+
+/* ===========================
+   Loading Spinner
+   =========================== */
+
+.spinner-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 9999;
+    justify-content: center;
+    align-items: center;
+}
+
+.spinner-overlay.show {
+    display: flex;
+}
+
+.spinner-border {
+    width: 3rem;
+    height: 3rem;
+    border-width: 0.4em;
+}
+
+/* ===========================
+   Alert Styles
+   =========================== */
+
+.alert {
+    border-radius: 8px;
+    border: none;
+    padding: 1rem;
+}
+
+.alert-info {
+    background-color: #d1ecf1;
+    color: #0c5460;
+    border-left: 4px solid #17a2b8;
+}
+
+.alert-success {
+    background-color: #d4edda;
+    color: #155724;
+    border-left: 4px solid var(--success-color);
+}
+
+.alert-warning {
+    background-color: #fff3cd;
+    color: #856404;
+    border-left: 4px solid var(--warning-color);
+}
+
+.alert-danger {
+    background-color: #f8d7da;
+    color: #721c24;
+    border-left: 4px solid var(--danger-color);
+}
+
+/* ===========================
+   Modal Styles
+   =========================== */
+
+.modal-content {
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+}
+
+.modal-header {
+    border-bottom: 1px solid #e9ecef;
+    border-radius: 10px 10px 0 0;
+}
+
+.modal-title {
+    font-weight: 600;
+}
+
+.btn-close {
+    transition: all 0.3s ease;
+}
+
+.btn-close:hover {
+    opacity: 0.8;
+}
+
+/* ===========================
+   Progress Bar
+   =========================== */
+
+.progress {
+    height: 25px;
+    border-radius: 10px;
+    background-color: #e9ecef;
+}
+
+.progress-bar {
+    background: linear-gradient(90deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    border-radius: 10px;
+    transition: width 0.6s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 600;
+    font-size: 0.85rem;
+}
+
+/* ===========================
+   Badge Styles
+   =========================== */
+
+.badge {
+    border-radius: 20px;
+    padding: 0.5rem 1rem;
+    font-weight: 600;
+}
+
+.badge-primary {
+    background-color: var(--primary-color);
+}
+
+.badge-success {
+    background-color: var(--success-color);
+}
+
+.badge-warning {
+    background-color: var(--warning-color);
+    color: black;
+}
+
+.badge-danger {
+    background-color: var(--danger-color);
+}
+
+/* ===========================
+   Resume Preview
+   =========================== */
+
+.resume-preview {
+    background-color: white;
+    border-radius: 4px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    padding: 3rem;
+    line-height: 1.5;
+    color: #2b2b2b;
+    min-height: 700px;
+    font-size: 0.95rem;
+    font-family: 'Georgia', 'Times New Roman', serif; /* Professional serif font for resumes */ 
+    border-top: 8px solid var(--primary-color);
+}
+
+/* Base marked.js inner container */
+.resume-preview-content h1, 
+.resume-preview-content h2, 
+.resume-preview-content h3, 
+.resume-preview-content h4 {
+    font-family: 'Segoe UI', Helvetica, sans-serif;
+    color: #1a202c;
+    font-weight: 700;
+}
+
+.resume-preview-content h1 {
+    font-size: 2.25rem;
+    margin-bottom: 0.5rem;
+    text-align: center;
+    color: var(--primary-color);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.resume-preview-content h2 {
+    font-size: 1.25rem;
+    border-bottom: 2px solid #e2e8f0;
+    padding-bottom: 0.3rem;
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #2d3748;
+}
+
+.resume-preview-content h3 {
+    font-size: 1.1rem;
+    margin-top: 1rem;
+    margin-bottom: 0.25rem;
+    color: #4a5568;
+}
+
+.resume-preview-content p {
+    margin-bottom: 0.75rem;
+}
+
+.resume-preview-content ul {
+    margin-left: 1.25rem;
+    margin-bottom: 1rem;
+    padding-left: 0;
+}
+
+.resume-preview-content li {
+    margin-bottom: 0.25rem;
+}
+
+.resume-preview-content strong {
+    font-weight: 600;
+    color: #1a202c;
+}
+
+.resume-preview-content em {
+    font-style: italic;
+    color: #4a5568;
+}
+
+.resume-preview-content hr {
+    border: 0;
+    border-top: 1px solid #cbd5e0;
+    margin: 1.5rem 0;
+}
+
+/* Section header dividers (replaces raw h2) */
+.resume-section-header {
+    display: flex;
+    align-items: center;
+    margin-top: 1.75rem;
+    margin-bottom: 0.75rem;
+    gap: 0.75rem;
+    font-family: 'Segoe UI', Helvetica, sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: var(--primary-color);
+}
+
+.resume-section-header::after {
+    content: '';
+    flex: 1;
+    height: 2px;
+    background: linear-gradient(90deg, var(--primary-color), transparent);
+    border-radius: 2px;
+}
+
+/* Role / company title (h3) */
+.resume-role-title {
+    font-family: 'Segoe UI', Helvetica, sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #2d3748;
+    margin-top: 0.75rem;
+    margin-bottom: 0.2rem;
+}
+
+/* ===========================
+   Topic Cards
+   =========================== */
+
+.topic-card {
+    border-left: 4px solid var(--primary-color);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.topic-card:hover {
+    border-left-color: var(--secondary-color);
+    transform: translateX(5px);
+}
+
+/* ===========================
+   Question Card
+   =========================== */
+
+.question-card {
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.question-card:hover {
+    border-color: var(--primary-color);
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.15);
+}
+
+/* ===========================
+   Footer
+   =========================== */
+
+footer {
+    background: linear-gradient(135deg, var(--dark-color) 0%, #1a1a1a 100%);
+    border-top: 1px solid #dee2e6;
+    margin-top: auto;
+}
+
+footer p {
+    margin: 0;
+}
+
+/* ===========================
+   Responsive Styles
+   =========================== */
+
+@media (max-width: 768px) {
+    .navbar-brand {
+        font-size: 1.25rem;
+    }
+
+    main {
+        padding: 1rem 0;
+    }
+
+    .card {
+        margin-bottom: 1.5rem;
+    }
+
+    h1 {
+        font-size: 1.75rem;
+    }
+
+    h2 {
+        font-size: 1.5rem;
+    }
+
+    .btn {
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+    }
+
+    .container-fluid {
+        padding: 0 0.5rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .row > div {
+        margin-bottom: 1rem;
+    }
+
+    .card-body {
+        padding: 1rem;
+    }
+
+    h1 {
+        font-size: 1.5rem;
+    }
+
+    .btn-group {
+        flex-direction: column;
+    }
+
+    .btn-group .btn {
+        border-radius: 8px;
+        margin-bottom: 0.5rem;
+    }
+}
+
+/* ===========================
+   Utility Classes
+   =========================== */
+
+.shadow-sm {
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075) !important;
+}
+
+.text-muted {
+    color: #6c757d !important;
+}
+
+.fw-bold {
+    font-weight: 700 !important;
+}
+
+.gap-2 {
+    gap: 1rem !important;
+}
+
+.min-vh-100 {
+    min-height: 100vh !important;
+}
+
+/* ===========================
+   Auth Pages
+   =========================== */
+
+.auth-card {
+    border: none;
+    border-radius: 16px;
+}
+
+.auth-icon {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.15) 0%, rgba(118, 75, 162, 0.15) 100%);
+    color: var(--primary-color);
+    font-size: 2rem;
+}
+
+.auth-card .form-control {
+    padding: 0.75rem 1rem;
+}
+
+.auth-card .btn-primary {
+    padding: 0.75rem 1rem;
+}

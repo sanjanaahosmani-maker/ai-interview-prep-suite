@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+
+{% block title %}Interview Q&A - AI Interview Prep Suite{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <!-- Configuration -->
+        <div class="col-lg-3 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0"><i class="fas fa-cog"></i> Configuration</h5>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label for="qaRole" class="form-label">Target Role *</label>
+                        <select class="form-select" id="qaRole">
+                            <option value="">Select a role...</option>
+                            <option value="Frontend Developer">Frontend Developer</option>
+                            <option value="Backend Developer">Backend Developer</option>
+                            <option value="Full Stack Developer">Full Stack Developer</option>
+                            <option value="Data Scientist">Data Scientist</option>
+                            <option value="Data Analyst">Data Analyst</option>
+                            <option value="DevOps Engineer">DevOps Engineer</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="qaExperience" class="form-label">Experience Level</label>
+                        <select class="form-select" id="qaExperience">
+                            <option value="junior">Junior</option>
+                            <option value="mid" selected>Mid-Level</option>
+                            <option value="senior">Senior</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="qaDomain" class="form-label">Domain/Industry</label>
+                        <input type="text" class="form-control" id="qaDomain" placeholder="e.g., Web Development">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="qaCount" class="form-label">Number of Questions</label>
+                        <input type="number" class="form-control" id="qaCount" value="5" min="1" max="20">
+                    </div>
+
+                    <button class="btn btn-success w-100" onclick="generateQuestions()">
+                        <i class="fas fa-sparkles"></i> Generate Questions
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Questions and Answers -->
+        <div class="col-lg-9">
+            <div id="questionsContainer"></div>
+            <div id="emptyQAState" class="text-center">
+                <div class="card shadow-sm border-0">
+                    <div class="card-body py-5">
+                        <i class="fas fa-question-circle fa-5x text-muted mb-3"></i>
+                        <h5>Generate Interview Questions</h5>
+                        <p class="text-muted">Configure your settings on the left and click "Generate Questions" to start practicing with role-specific interview questions.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Question Modal -->
+<div class="modal fade" id="questionModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-info text-white">
+                <h5 class="modal-title" id="questionModalTitle">Interview Question</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-4">
+                    <h6 class="text-muted mb-2">Question</h6>
+                    <p id="modalQuestionText" class="fs-5"></p>
+                </div>
+
+                <div class="mb-4">
+                    <label for="userAnswer" class="form-label">Your Answer</label>
+                    <textarea class="form-control" id="userAnswer" rows="4" placeholder="Type your answer here..."></textarea>
+                </div>
+
+                <div id="idealAnswerSection" style="display: none;">
+                    <h6 class="text-muted mb-2">Ideal Answer</h6>
+                    <div class="alert alert-info">
+                        <p id="modalIdealAnswer"></p>
+                    </div>
+                </div>
+
+                <div id="feedbackSection" style="display: none;">
+                    <h6 class="text-muted mb-2">Feedback</h6>
+                    <div id="feedbackContent"></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="submitAnswerBtn" onclick="submitAnswer()">Submit Answer</button>
+                <button type="button" class="btn btn-info" id="showAnswerBtn" onclick="showIdealAnswer()">Show Ideal Answer</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/interview_qa.js') }}"></script>
+{% endblock %}

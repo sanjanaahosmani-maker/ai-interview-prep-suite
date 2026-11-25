@@ -1,0 +1,132 @@
+{% extends "base.html" %}
+
+{% block title %}ATS Resume Checker - AI Interview Prep Suite{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row mb-4">
+        <div class="col-12">
+            <h1 class="text-gradient"><i class="fas fa-chart-line"></i> ATS Resume Checker</h1>
+            <p class="lead">Check your resume's keyword alignment and ATS-friendly structure.</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-7 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0"><i class="fas fa-file-lines"></i> Resume and Job Details</h5>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label for="resumeText" class="form-label">Resume text *</label>
+                        <textarea id="resumeText" class="form-control" rows="12" required placeholder="Paste the full text of your resume here..."></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="jobDescription" class="form-label">Job description <span class="text-muted">(recommended)</span></label>
+                        <textarea id="jobDescription" class="form-control" rows="8" placeholder="Paste the target job description to compare keywords..."></textarea>
+                    </div>
+                    <button type="button" id="analyzeButton" class="btn btn-primary w-100" onclick="analyzeAts()">
+                        <i class="fas fa-magnifying-glass-chart"></i> Analyze Resume
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-5">
+            <div class="card shadow-sm mb-4" id="atsResults" style="display:none">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0"><i class="fas fa-gauge-high"></i> ATS Analysis</h5>
+                </div>
+                <div class="card-body">
+                    <div class="text-center mb-4">
+                        <div class="display-4 fw-bold" id="atsScore">--</div>
+                        <div class="text-muted">Overall ATS score</div>
+                    </div>
+                    <div id="keywordMatchWrap" class="mb-3" style="display:none">
+                        <div class="d-flex justify-content-between mb-1">
+                            <strong>Keyword match</strong>
+                            <span id="keywordMatch">0%</span>
+                        </div>
+                        <div class="progress" style="height:10px">
+                            <div id="keywordProgress" class="progress-bar" role="progressbar" style="width:0"></div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <h6><i class="fas fa-check-circle text-success"></i> Matched keywords</h6>
+                        <div id="matchedKeywords" class="d-flex flex-wrap gap-2"></div>
+                    </div>
+                    <div class="mb-3">
+                        <h6><i class="fas fa-circle-exclamation text-warning"></i> Missing keywords</h6>
+                        <div id="missingKeywords" class="d-flex flex-wrap gap-2"></div>
+                    </div>
+                    <div>
+                        <h6><i class="fas fa-lightbulb text-primary"></i> Recommendations</h6>
+                        <ul id="recommendations" class="mb-0"></ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card shadow-sm border-0" id="atsEmpty">
+                <div class="card-body py-5 text-center">
+                    <i class="fas fa-file-circle-check fa-5x text-muted mb-3"></i>
+                    <h5>Ready for analysis</h5>
+                    <p class="text-muted mb-0">Paste your resume and, optionally, a job description to get started.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+async function analyzeAts() {
+    const resumeText = document.getElementById('resumeText').value.trim();
+    const jobDescription = document.getElementById('jobDescription').value.trim();
+    if (!resumeText) {
+        showAlert('Paste your resume text first', 'warning');
+        document.getElementById('resumeText').focus();
+        return;
+    }
+
+    const button = document.getElementById('analyzeButton');
+    button.disabled = true;
+    showLoading();
+
+    try {
+        const data = await apiRequest('/ats/analyze', {
+            method: 'POST',
+            body: JSON.stringify({resume_text: resumeText, job_description: jobDescription})
+        });
+
+        document.getElementById('atsEmpty').style.display = 'none';
+        document.getElementById('atsResults').style.display = 'block';
+        document.getElementById('atsScore').textContent = data.score;
+
+        const keywordWrap = document.getElementById('keywordMatchWrap');
+        if (data.keyword_match !== null) {
+            keywordWrap.style.display = 'block';
+            document.getElementById('keywordMatch').textContent = data.keyword_match + '%';
+            document.getElementById('keywordProgress').style.width = data.keyword_match + '%';
+        } else {
+            keywordWrap.style.display = 'none';
+        }
+
+        document.getElementById('matchedKeywords').innerHTML = data.matched_keywords.length
+            ? data.matched_keywords.map(word => `<span class="badge bg-success-subtle text-success border border-success-subtle">${escapeHtml(word)}</span>`).join('')
+            : '<span class="text-muted">No matched keywords found</span>';
+        document.getElementById('missingKeywords').innerHTML = data.missing_keywords.length
+            ? data.missing_keywords.map(word => `<span class="badge bg-warning-subtle text-warning-emphasis border border-warning-subtle">${escapeHtml(word)}</span>`).join('')
+            : '<span class="text-muted">No missing keywords detected</span>';
+        document.getElementById('recommendations').innerHTML = data.recommendations
+            .map(item => `<li>${escapeHtml(item)}</li>`).join('');
+    } catch (error) {
+        showAlert(error.message, 'danger');
+    } finally {
+        hideLoading();
+        button.disabled = false;
+    }
+}
+</script>
+{% endblock %}
